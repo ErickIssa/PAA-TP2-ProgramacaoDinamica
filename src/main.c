@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 #include "../include/TAD_mapa.h"
+#include "../include/TAD_menu.h"
 
 int main(){
 
@@ -9,5 +10,8 @@ int main(){
     printf("oaasa");
     imprimeMapa(atlas);
     printf("oaasa");
+
+    menu();
+
     return 0;
 }

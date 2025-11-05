@@ -14,6 +14,7 @@ void inicializarMapaVazio(Atlas *atlas, int altura, int largura) {
     for (int t = 0; t < tempos; t++) {
         mapa->celula[t] = malloc(altura * sizeof(int *)); //dentro de cada tempo tem um vetor de ponteiro para as linhas
         for (int i = 0; i < altura; i++) {
+            mapa->celula[t][i] = malloc(largura * sizeof(int));
             for (int j = 0; j < largura; j++) { // a linha em si
                 mapa->celula[t][i][j] = 999;
             }

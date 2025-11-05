@@ -2,12 +2,11 @@
 #define MAPA_H
 
 
-int presente = 1;
-int passado = 0;
+#define presente 1
+#define passado 0
 
 typedef struct Mapa
-{   
-    
+{
     int altura;
     int largura;
     int ***celula; // assusta nao isso é 2 ponteiros para linha e coluna, 1 ponteiro para passado e futuro, 1 ponteiro para String

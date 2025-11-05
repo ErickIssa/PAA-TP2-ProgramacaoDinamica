@@ -8,8 +8,8 @@ OBJ_DIR = obj
 
 # Arquivos
 TARGET = main.exe
-SRCS = $(SRC_DIR)/main.c $(SRC_DIR)/TAD_mapa.c
-OBJS = $(OBJ_DIR)/main.o $(OBJ_DIR)/TAD_mapa.o
+SRCS = $(SRC_DIR)/main.c $(SRC_DIR)/TAD_mapa.c $(SRC_DIR)/menu.c
+OBJS = $(OBJ_DIR)/main.o $(OBJ_DIR)/TAD_mapa.o $(OBJ_DIR)/menu.o
 
 # Regra padrão
 all: $(TARGET)
@@ -33,3 +33,4 @@ clean:
 
 # Executar
 run:
+	$(TARGET)
