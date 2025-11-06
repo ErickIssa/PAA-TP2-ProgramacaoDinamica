@@ -8,14 +8,15 @@ void menu(){
     printf("QUE COMECE A BATALHA CONTRA NIKADOR!\n");
 
     Atlas atlas;
+    atlas.mapa.celula = NULL;
 
     while(1){
         int opcao;
 
         printf("--------------------MENU--------------------\n");
         printf("1- Ler arquivo de entrada\n");
-        printf("2- Iniciar jornada\n");
-        printf("3- Desativar modo de analise\n");
+        printf("2- Imprimir mapa\n");
+        printf("3- Montar PD\n");
         printf("4 - Gerar um novo mapa\n");
         printf("0- Sair\n");
 
@@ -26,10 +27,17 @@ void menu(){
 
         case 1:
             leituraArquivo(&atlas);
-            break;
+        break;
         case 2:
-            break;
+        if (atlas.mapa.celula == NULL) {
+            printf("Mapa ainda nao foi carregado!\n");
+        }else {
+            imprimeMapa(atlas);
+        }
+        break;
         case 3:
+            melhorCaminho(atlas);
+            
             break;  
         case 4:
             break;
@@ -78,7 +86,7 @@ void leituraArquivo(Atlas *atlas){
 
     fscanf(file,"%d %d %d %d %d", &altura, &largura, &forcaTripulacao, &descanso, &forcaNikador); fgetc(file);
     
-    inicializarMapaVazio(atlas,altura,largura);
+    inicializarAtlasVazio(atlas,altura,largura,forcaTripulacao,descanso,forcaNikador);
     
     Mapa *mapa = &atlas->mapa;
     for (int i = 0; i < altura; i++) {
@@ -105,7 +113,6 @@ void leituraArquivo(Atlas *atlas){
     if (c != EOF) ungetc(c, file); // devolve caractere não-'\n'
 
     char linha[16];
-    long pos = ftell(file);
     if (fgets(linha, sizeof(linha), file)) {
         if (strncmp(linha, "///", 3) != 0) {
             printf("Arquivo em formato errado\n");
@@ -121,9 +128,9 @@ void leituraArquivo(Atlas *atlas){
             int valor;
 
             if (strcmp(buffer, "***") == 0) {
-                valor = -1;
-            } else if (strcmp(buffer, "AAA") == 0) {
                 valor = -2;
+            } else if (strcmp(buffer, "AAA") == 0) {
+                valor = -1;
             } else {
             valor = atoi(buffer);
             }
@@ -132,7 +139,6 @@ void leituraArquivo(Atlas *atlas){
     }
 
 }
-        imprimeMapa(*atlas);
         fgetc(file);
 }
 

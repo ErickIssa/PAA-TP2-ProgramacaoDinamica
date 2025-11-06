@@ -5,12 +5,6 @@
 
 int main(){
 
-    Atlas atlas;
-    inicializarMapaVazio(&atlas, 5,5);
-    printf("oaasa");
-    imprimeMapa(atlas);
-    printf("oaasa");
-
     menu();
 
     return 0;

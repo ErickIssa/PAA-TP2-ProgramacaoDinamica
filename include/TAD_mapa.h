@@ -18,9 +18,11 @@ typedef struct Setor{
     int descanso;
     int forcaNikador;
     Mapa mapa;
+    Mapa mapaPD;
 } Atlas;
 
 void imprimeMapa(Atlas Atlas);
-void inicializarMapaVazio(Atlas *atlas, int altura, int largura);
+void inicializarAtlasVazio(Atlas *atlas, int altura, int largura,  int forcaTripulacao, int descanso, int forcaNikador);
+int celulaValida(int n);
 
 #endif
