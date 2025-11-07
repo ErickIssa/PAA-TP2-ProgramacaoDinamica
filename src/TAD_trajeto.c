@@ -98,14 +98,13 @@ void melhorCaminho(Atlas atlas) {
 
     // analise ultima linha, ve qual maior forla e qual tempo é o melhor
     int melhorForca = invalido;
-    int tempoFinal = presente;
     //acha na ultima coluna maior forca do passado ou presente
     for (int tempo = passado; tempo <= presente; tempo++) { //tp entre passado e presente
         for (int i = 0; i < mapa.altura; i++) {
             int f = mapaPD.celula[tempo][i][mapa.largura - 1]; //f = força da ultima coluna
             if (celulaValida(f) && f > melhorForca) {
                 melhorForca = f;
-                tempoFinal = tempo;
+                
             }
         }
     }

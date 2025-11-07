@@ -37,7 +37,11 @@ void menu(){
             }
         break;
         case 3:
-            melhorCaminho(atlas);
+            if (atlas.mapa.celula == NULL) {
+                printf("Mapa ainda nao foi carregado!\n");
+            }else {
+                melhorCaminho(atlas);
+            }
             break;  
         case 4:
             if (atlas.mapaPD.celula == NULL) {

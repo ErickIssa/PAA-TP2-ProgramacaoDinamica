@@ -75,12 +75,13 @@ void imprimeMapa(Atlas atlas) {
     for (int i = 0; i < mapa.altura; i++) {
         for (int j = 0; j < mapa.largura; j++) {
             int valor = mapa.celula[passado][i][j];
-            if (valor == invalido)
+            if (valor == invalido){
                 printf("*** ");
-            else if (valor == teletransporte)
+            }
+            else if (valor == teletransporte){
                 printf("AAA ");
-            else
-                printf("%03d ", valor);
+            }
+            else{printf("%03d ", valor);}
         }
         printf("\n");
     }
@@ -94,12 +95,13 @@ void imprimeMapaPD(Atlas atlas) {
     for (int i = 0; i < mapa.altura; i++) {
         for (int j = 0; j < mapa.largura; j++) {
             int valor = mapa.celula[presente][i][j];
-            if (valor == invalido)
+            if (valor == invalido){
                 printf("*** ");
-            else if (valor == teletransporte)
+            }
+            else if (valor == teletransporte){
                 printf("AAA ");
-            else
-                printf("%03d ", valor);
+            }
+            else{printf("%03d ", valor);}
         }
         printf("\n");
     }
@@ -108,12 +110,15 @@ void imprimeMapaPD(Atlas atlas) {
     for (int i = 0; i < mapa.altura; i++) {
         for (int j = 0; j < mapa.largura; j++) {
             int valor = mapa.celula[passado][i][j];
-            if (valor == invalido)
+            if (valor == invalido){
                 printf("*** ");
-            else if (valor == teletransporte)
+            }
+            else if (valor == teletransporte){
                 printf("AAA ");
-            else
+            }
+            else{
                 printf("%03d ", valor);
+            }
         }
         printf("\n");
     }
