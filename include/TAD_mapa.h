@@ -4,6 +4,9 @@
 
 #define presente 1
 #define passado 0
+#define invalido -2
+#define teletransporte -1
+#define valordescanso 000
 
 typedef struct Mapa
 {
@@ -22,6 +25,7 @@ typedef struct Setor{
 } Atlas;
 
 void imprimeMapa(Atlas Atlas);
+void imprimeMapaPD(Atlas atlas);
 void inicializarAtlasVazio(Atlas *atlas, int altura, int largura,  int forcaTripulacao, int descanso, int forcaNikador);
 int celulaValida(int n);
 

@@ -9,6 +9,7 @@ void menu(){
 
     Atlas atlas;
     atlas.mapa.celula = NULL;
+    atlas.mapaPD.celula = NULL;
 
     while(1){
         int opcao;
@@ -17,7 +18,7 @@ void menu(){
         printf("1- Ler arquivo de entrada\n");
         printf("2- Imprimir mapa\n");
         printf("3- Montar PD\n");
-        printf("4 - Gerar um novo mapa\n");
+        printf("4 - Imprime Mapa PD\n");
         printf("0- Sair\n");
 
         printf("Escolha uma opcao acima:\n");
@@ -29,17 +30,21 @@ void menu(){
             leituraArquivo(&atlas);
         break;
         case 2:
-        if (atlas.mapa.celula == NULL) {
-            printf("Mapa ainda nao foi carregado!\n");
-        }else {
+            if (atlas.mapa.celula == NULL) {
+                printf("Mapa ainda nao foi carregado!\n");
+            }else {
             imprimeMapa(atlas);
-        }
+            }
         break;
         case 3:
             melhorCaminho(atlas);
-            
             break;  
         case 4:
+            if (atlas.mapaPD.celula == NULL) {
+                printf("Mapa ainda nao foi carregado!\n");
+            }else {
+                imprimeMapaPD(atlas);
+            }
             break;
         case 0:
             printf("Fechando programa...\n");
@@ -97,9 +102,9 @@ void leituraArquivo(Atlas *atlas){
             int valor;
 
             if (strcmp(buffer, "***") == 0) {
-                valor = -1;
+                valor = invalido;
             } else if (strcmp(buffer, "AAA") == 0) {
-                valor = -2;
+                valor = teletransporte;
             } else {
             valor = atoi(buffer);
             }
@@ -128,9 +133,9 @@ void leituraArquivo(Atlas *atlas){
             int valor;
 
             if (strcmp(buffer, "***") == 0) {
-                valor = -2;
+                valor = invalido;
             } else if (strcmp(buffer, "AAA") == 0) {
-                valor = -1;
+                valor = teletransporte;
             } else {
             valor = atoi(buffer);
             }
