@@ -24,6 +24,13 @@ typedef struct Setor{
     Mapa mapaPD;
 } Atlas;
 
+
+typedef struct {
+    int linha;
+    int coluna;
+    int tempo;
+} Posicao;
+
 void imprimeMapa(Atlas Atlas);
 void imprimeMapaPD(Atlas atlas);
 void inicializarAtlasVazio(Atlas *atlas, int altura, int largura,  int forcaTripulacao, int descanso, int forcaNikador);
