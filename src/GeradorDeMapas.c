@@ -72,9 +72,9 @@ void gerarMapa(FILE * fp){
     int descanso = gerarNmrAleatorio(1,20);
     fprintf(fp,"%d %d %d %d %d\n", altura, largura, forcaTripulacao, descanso, forcaNikador);
 
-    int portal1_x = gerarNmrAleatorio(1,largura);
+    int portal1_x = gerarNmrAleatorio(2,largura);
     int portal1_y = gerarNmrAleatorio(1,altura);
-    int portal2_x = gerarNmrAleatorio(1,largura);
+    int portal2_x = gerarNmrAleatorio(2,largura);
     int portal2_y = gerarNmrAleatorio(1,altura);
 
     while(portal1_x == portal2_x){
@@ -103,5 +103,6 @@ void geradorDeMapas(){
     }
     gerarMapa(fp);
     return;
+
 
 }
