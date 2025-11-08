@@ -115,9 +115,53 @@ void melhorCaminho(Atlas atlas) {
     Posicao *melhorCaminho = encontraMelhorCaminho(atlas, &tamanho);
 
     if (melhorCaminho != NULL) {
-        for (int i = 0; i < tamanho; i++) {
-            printf("%d %d tempo: %d\n", melhorCaminho[i].linha, melhorCaminho[i].coluna, melhorCaminho[i].tempo);
+        
+        char caminhoPresente[atlas.mapa.altura][atlas.mapa.largura];
+        char caminhoPassado[atlas.mapa.altura][atlas.mapa.largura];
+        
+        for(int i = 0; i <atlas.mapa.altura; i++){
+
+            for(int j = 0; j<atlas.mapa.largura; j++){
+
+                caminhoPresente[i][j] = 'X';
+                caminhoPassado[i][j] = 'X';
+
+            }
         }
+
+        for (int i = 0; i < tamanho; i++) {
+            if(melhorCaminho[i].tempo == presente){
+                caminhoPresente[melhorCaminho[i].linha][melhorCaminho[i].coluna] = '0' + i + 1;
+            }else{
+                caminhoPassado[melhorCaminho[i].linha][melhorCaminho[i].coluna] = '0' + i + 1;
+            }
+        }
+
+        printf("PRESENTE:\n");
+        for(int i = 0; i <atlas.mapa.altura; i++){
+            for(int j = 0; j<atlas.mapa.largura; j++){
+                if(caminhoPresente[i][j] == 'X'){
+                    printf("\x1b[31m" "[%c]" "\x1b[0m", caminhoPresente[i][j]);
+                }else{
+                    printf( "\x1b[34m" "[%c]" "\x1b[0m", caminhoPresente[i][j]);
+                }
+            }
+            printf("\n");
+        }
+        printf("PASSADO:\n");
+        for(int i = 0; i <atlas.mapa.altura; i++){
+            for(int j = 0; j<atlas.mapa.largura; j++){
+                if(caminhoPassado[i][j] == 'X'){
+                    printf("\x1b[31m" "[%c]" "\x1b[0m", caminhoPassado[i][j]);
+                }else{
+                    printf( "\x1b[34m" "[%c]" "\x1b[0m", caminhoPassado[i][j]);
+                }
+            }
+            printf("\n");
+        }
+
+
+
         free(melhorCaminho);
     }
         //else{printf("A tripulacao nao possui caminho\n");}
@@ -161,12 +205,12 @@ Posicao* encontraMelhorCaminho(Atlas atlas, int *tamanho) {
     int passos = 0;
     //aqui salva outras posicoes sem ser a inicial
     // da direita pra esquerda
-    imprimeMapaPD(atlas);
+    
     for (int j = colFinal; j >= 0; j--) {
         trajeto[passos].linha = linhaAtual;
         trajeto[passos].coluna = j;
         trajeto[passos].tempo = tempoAtual;
-        printf("%d %d\n", linhaAtual, tempoAtual);
+        
         
         passos++;
 
