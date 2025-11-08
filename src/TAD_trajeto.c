@@ -86,17 +86,19 @@ void melhorCaminho(Atlas atlas) {
                     if (tempo == presente) {
                         outroTempo = passado;
                     } else {
-                    outroTempo = presente;
+                        outroTempo = presente;
                     }
                     if (novaForca > mapaPD.celula[outroTempo][i][j]) {
-                    mapaPD.celula[outroTempo][i][j] = novaForca; //maior vai
+                        mapaPD.celula[outroTempo][i][j] = novaForca; //maior vai
+                    }else{
+                        mapaPD.celula[tempo][i][j] = mapaPD.celula[outroTempo][i][j];
                     }
                 }
             }
         }
     }
 
-    // analise ultima linha, ve qual maior forla e qual tempo é o melhor
+    // analise ultima linha, ve qual maior força e qual tempo é o melhor
     int melhorForca = invalido;
     //acha na ultima coluna maior forca do passado ou presente
     for (int tempo = passado; tempo <= presente; tempo++) { //tp entre passado e presente
@@ -159,10 +161,13 @@ Posicao* encontraMelhorCaminho(Atlas atlas, int *tamanho) {
     int passos = 0;
     //aqui salva outras posicoes sem ser a inicial
     // da direita pra esquerda
+    imprimeMapaPD(atlas);
     for (int j = colFinal; j >= 0; j--) {
         trajeto[passos].linha = linhaAtual;
         trajeto[passos].coluna = j;
         trajeto[passos].tempo = tempoAtual;
+        printf("%d %d\n", linhaAtual, tempoAtual);
+        
         passos++;
 
         int cel = mapa.celula[tempoAtual][linhaAtual][j];

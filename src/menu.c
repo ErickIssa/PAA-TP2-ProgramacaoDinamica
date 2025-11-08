@@ -18,7 +18,7 @@ void menu(){
         printf("1- Ler arquivo de entrada\n");
         printf("2- Imprimir mapa\n");
         printf("3- Montar PD\n");
-        printf("4 - Imprime Mapa PD\n");
+        printf("4- Imprime Mapa PD\n");
         printf("0- Sair\n");
 
         printf("Escolha uma opcao acima:\n");
