@@ -9,8 +9,11 @@ int gerarNmrAleatorio(int min, int max){
 void preencheMapa(FILE * fp, int altura, int largura, int portal1_x, int portal1_y, int portal2_x, int portal2_y){
     for (int i=1; i<=altura;i++){
         for (int j=1; j<=largura; j++){
-            if( (i == portal1_y && j == portal1_x) || (i == portal2_y && j == portal2_x)){
+            if(i == portal1_y && j == portal1_x){
                 fprintf(fp,"AAA");
+            }
+            if(i == portal2_y && j == portal2_x){
+                fprintf(fp,"BBB");
             }
             else{
                 int oraculo = gerarNmrAleatorio(1,5);
