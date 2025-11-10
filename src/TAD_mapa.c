@@ -63,8 +63,11 @@ void imprimeMapa(Atlas atlas) {
             int valor = mapa.celula[presente][i][j];
             if (valor == invalido)
                 printf("*** ");
-            else if (valor == teletransporte)
+            else if (valor == teletransporteA)
                 printf("AAA ");
+            else if (valor == teletransporteB){
+                printf("BBB ");
+            }
             else
                 printf("%03d ", valor);
         }
@@ -78,10 +81,13 @@ void imprimeMapa(Atlas atlas) {
             if (valor == invalido){
                 printf("*** ");
             }
-            else if (valor == teletransporte){
+            else if (valor == teletransporteA){
                 printf("AAA ");
+            }else if (valor == teletransporteB){
+                printf("BBB ");
+            }else{
+                printf("%03d ", valor);
             }
-            else{printf("%03d ", valor);}
         }
         printf("\n");
     }
@@ -98,8 +104,10 @@ void imprimeMapaPD(Atlas atlas) {
             if (valor == invalido){
                 printf("*** ");
             }
-            else if (valor == teletransporte){
+            else if (valor == teletransporteA){
                 printf("AAA ");
+            }else if (valor == teletransporteB){
+                printf("BBB ");
             }
             else{printf("%03d ", valor);}
         }
@@ -113,10 +121,11 @@ void imprimeMapaPD(Atlas atlas) {
             if (valor == invalido){
                 printf("*** ");
             }
-            else if (valor == teletransporte){
+            else if (valor == teletransporteA){
                 printf("AAA ");
-            }
-            else{
+            }else if (valor == teletransporteB){
+                printf("BBB ");
+            }else{
                 printf("%03d ", valor);
             }
         }

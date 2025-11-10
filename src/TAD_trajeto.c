@@ -37,6 +37,12 @@ void melhorCaminho(Atlas atlas) {
     Mapa mapa = atlas.mapa;
     Mapa mapaPD = atlas.mapaPD;
 
+    printf("posicao portal a presente: (%d,%d)\n", atlas.mapa.portalApresente.linha,atlas.mapa.portalApresente.coluna);
+    printf("posicao portal a passado: (%d,%d)\n", atlas.mapa.portalApassado.linha,atlas.mapa.portalApassado.coluna);
+    printf("posicao portal b presente: (%d,%d)\n", atlas.mapa.portalBpresente.linha,atlas.mapa.portalBpresente.coluna);
+    printf("posicao portal b passado: (%d,%d)\n", atlas.mapa.portalBpassado.linha,atlas.mapa.portalBpassado.coluna);
+
+
     // Primeira coluna, nao pode ser AAA
     for (int i = 0; i < mapa.altura; i++) {
         if (celulaValida(mapa.celula[presente][i][0])) {
@@ -57,7 +63,6 @@ void melhorCaminho(Atlas atlas) {
         for (int i = 0; i < mapa.altura; i++) {
             // percorre presente e passado
             for (int tempo = passado; tempo <= presente; tempo++) { //tp entre passado e presente
-
                 if (!celulaValida(mapa.celula[tempo][i][j])){
                     continue;
                 }
@@ -79,24 +84,41 @@ void melhorCaminho(Atlas atlas) {
                 }
 
                 mapaPD.celula[tempo][i][j] = novaForca;
-
                 // Ancora que copia valor
-                if (valorCelula == teletransporte) { //so comeca preencher passado aqui porque enquanto n tem ancora n tem valor em passado
-                    int outroTempo;
-                    if (tempo == presente) {
-                        outroTempo = passado;
-                    } else {
-                        outroTempo = presente;
-                    }
-                    if (novaForca > mapaPD.celula[outroTempo][i][j]) {
-                        mapaPD.celula[outroTempo][i][j] = novaForca; //maior vai
+                if (valorCelula == teletransporteA) { //so comeca preencher passado aqui porque enquanto n tem ancora n tem valor em passado
+                    if(tempo == presente){
+                        if (novaForca > mapaPD.celula[passado][atlas.mapaPD.portalApassado.linha][atlas.mapaPD.portalApassado.coluna]) {
+                            mapaPD.celula[passado][atlas.mapaPD.portalApassado.linha][atlas.mapaPD.portalApassado.coluna] = novaForca; //maior vai
+                        }else{
+                            mapaPD.celula[tempo][i][j] = mapaPD.celula[passado][atlas.mapaPD.portalApassado.linha][atlas.mapaPD.portalApassado.coluna];
+                        }
                     }else{
-                        mapaPD.celula[tempo][i][j] = mapaPD.celula[outroTempo][i][j];
+                        if (novaForca > mapaPD.celula[presente][atlas.mapaPD.portalApresente.linha][atlas.mapaPD.portalApresente.coluna]) {
+                            mapaPD.celula[presente][atlas.mapaPD.portalApresente.linha][atlas.mapaPD.portalApresente.coluna] = novaForca; //maior vai
+                        }else{
+                            mapaPD.celula[tempo][i][j] = mapaPD.celula[presente][atlas.mapaPD.portalApresente.linha][atlas.mapaPD.portalApresente.coluna];
+                        }
+                    }
+                }
+                if (valorCelula == teletransporteB) { //so comeca preencher passado aqui porque enquanto n tem ancora n tem valor em passado
+                    if(tempo == presente){
+                        if (novaForca > mapaPD.celula[passado][atlas.mapaPD.portalBpassado.linha][atlas.mapaPD.portalBpassado.coluna]) {
+                            mapaPD.celula[passado][atlas.mapaPD.portalBpassado.linha][atlas.mapaPD.portalBpassado.coluna] = novaForca; //maior vai
+                        }else{
+                            mapaPD.celula[tempo][i][j] = mapaPD.celula[passado][atlas.mapaPD.portalBpassado.linha][atlas.mapaPD.portalBpassado.coluna];
+                        }
+                    }else{
+                        if (novaForca > mapaPD.celula[presente][atlas.mapaPD.portalBpresente.linha][atlas.mapaPD.portalBpresente.coluna]) {
+                            mapaPD.celula[presente][atlas.mapaPD.portalBpresente.linha][atlas.mapaPD.portalBpresente.coluna] = novaForca; //maior vai
+                        }else{
+                            mapaPD.celula[tempo][i][j] = mapaPD.celula[presente][atlas.mapaPD.portalBpresente.linha][atlas.mapaPD.portalBpresente.coluna];
+                        }
                     }
                 }
             }
         }
     }
+
 
     // analise ultima linha, ve qual maior força e qual tempo é o melhor
     int melhorForca = invalido;
@@ -161,7 +183,8 @@ void melhorCaminho(Atlas atlas) {
         }
 
 
-
+        free(caminhoPassado);
+        free(caminhoPresente);
         free(melhorCaminho);
     }
         //else{printf("A tripulacao nao possui caminho\n");}
@@ -217,20 +240,52 @@ Posicao* encontraMelhorCaminho(Atlas atlas, int *tamanho) {
         int cel = mapa.celula[tempoAtual][linhaAtual][j];
 
         // verificacao ancora
-        if (cel == teletransporte) {
-            int outroTempo;
+        if (cel == teletransporteA){
+            if(tempoAtual == presente){
 
-            if (tempoAtual == presente) {
-                outroTempo = passado;
-            } else {
-                outroTempo = presente;
+                int valorAtual = mapaPD.celula[tempoAtual][linhaAtual][j];
+                int valorOutro = mapaPD.celula[passado][mapaPD.portalApassado.linha][mapaPD.portalApassado.coluna];
+                int celOutro = mapa.celula[passado][mapaPD.portalApassado.linha][mapaPD.portalApassado.coluna];
+
+                if (celulaValida(celOutro) && celulaValida(valorOutro) && valorOutro >= valorAtual) {
+                tempoAtual = passado;
+                linhaAtual = mapaPD.portalApassado.linha;
+                }
+
+            }else{
+
+                int valorAtual = mapaPD.celula[tempoAtual][linhaAtual][j];
+                int valorOutro = mapaPD.celula[presente][mapaPD.portalApresente.linha][mapaPD.portalApresente.coluna];
+                int celOutro = mapa.celula[presente][mapaPD.portalApresente.linha][mapaPD.portalApresente.coluna];
+
+                if (celulaValida(celOutro) && celulaValida(valorOutro) && valorOutro >= valorAtual) {
+                tempoAtual = presente;
+                linhaAtual = mapaPD.portalApresente.linha;
+                }
             }
-            int valorAtual = mapaPD.celula[tempoAtual][linhaAtual][j];
-            int valorOutro = mapaPD.celula[outroTempo][linhaAtual][j];
-            int celOutro = mapa.celula[outroTempo][linhaAtual][j];
+        }
+        else if (cel == teletransporteB){
+            if(tempoAtual == presente){
 
-            if (celulaValida(celOutro) && celulaValida(valorOutro) && valorOutro >= valorAtual) {
-                tempoAtual = outroTempo;
+                int valorAtual = mapaPD.celula[tempoAtual][linhaAtual][j];
+                int valorOutro = mapaPD.celula[passado][mapaPD.portalBpassado.linha][mapaPD.portalBpassado.coluna];
+                int celOutro = mapa.celula[passado][mapaPD.portalBpassado.linha][mapaPD.portalBpassado.coluna];
+
+                if (celulaValida(celOutro) && celulaValida(valorOutro) && valorOutro >= valorAtual) {
+                tempoAtual = passado;
+                linhaAtual = mapaPD.portalBpassado.linha;
+                }
+
+            }else{
+
+                int valorAtual = mapaPD.celula[tempoAtual][linhaAtual][j];
+                int valorOutro = mapaPD.celula[presente][mapaPD.portalBpresente.linha][mapaPD.portalBpresente.coluna];
+                int celOutro = mapa.celula[presente][mapaPD.portalBpresente.linha][mapaPD.portalBpresente.coluna];
+
+                if (celulaValida(celOutro) && celulaValida(valorOutro) && valorOutro >= valorAtual) {
+                tempoAtual = presente;
+                linhaAtual = mapaPD.portalBpresente.linha;
+                }
             }
         }
 
