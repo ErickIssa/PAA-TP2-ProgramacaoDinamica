@@ -18,7 +18,7 @@ void menu(){
         printf("1- Ler arquivo de entrada\n");
         printf("2- Imprimir mapa\n");
         printf("3- Montar PD\n");
-        printf("4 - Imprime Mapa PD\n");
+        printf("4- Imprime Mapa PD\n");
         printf("0- Sair\n");
 
         printf("Escolha uma opcao acima:\n");
@@ -108,7 +108,21 @@ void leituraArquivo(Atlas *atlas){
             if (strcmp(buffer, "***") == 0) {
                 valor = invalido;
             } else if (strcmp(buffer, "AAA") == 0) {
-                valor = teletransporte;
+                valor = teletransporteA;
+                Posicao posAPresente;
+                posAPresente.coluna = j;
+                posAPresente.linha = i;
+                posAPresente.tempo = presente;
+                mapa->portalApresente = posAPresente;
+                atlas->mapaPD.portalApresente = posAPresente;
+            } else if (strcmp(buffer, "BBB") == 0) {
+                valor = teletransporteB;
+                Posicao posBPresente;
+                posBPresente.coluna = j;
+                posBPresente.linha = i;
+                posBPresente.tempo = presente;
+                mapa->portalBpresente = posBPresente;
+                atlas->mapaPD.portalBpresente = posBPresente;
             } else {
             valor = atoi(buffer);
             }
@@ -139,7 +153,21 @@ void leituraArquivo(Atlas *atlas){
             if (strcmp(buffer, "***") == 0) {
                 valor = invalido;
             } else if (strcmp(buffer, "AAA") == 0) {
-                valor = teletransporte;
+                valor = teletransporteA;
+                Posicao posAPassado;
+                posAPassado.coluna = j;
+                posAPassado.linha = i;
+                posAPassado.tempo = presente;
+                mapa->portalApassado = posAPassado;
+                atlas->mapaPD.portalApassado = posAPassado;
+            } else if (strcmp(buffer, "BBB") == 0) {
+                valor = teletransporteB;
+                Posicao posBPassado;
+                posBPassado.coluna = j;
+                posBPassado.linha = i;
+                posBPassado.tempo = presente;
+                mapa->portalBpassado = posBPassado;
+                atlas->mapaPD.portalBpassado = posBPassado;
             } else {
             valor = atoi(buffer);
             }
