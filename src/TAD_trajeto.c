@@ -37,10 +37,6 @@ void melhorCaminho(Atlas atlas) {
     Mapa mapa = atlas.mapa;
     Mapa mapaPD = atlas.mapaPD;
 
-    printf("posicao portal a presente: (%d,%d)\n", atlas.mapa.portalApresente.linha,atlas.mapa.portalApresente.coluna);
-    printf("posicao portal a passado: (%d,%d)\n", atlas.mapa.portalApassado.linha,atlas.mapa.portalApassado.coluna);
-    printf("posicao portal b presente: (%d,%d)\n", atlas.mapa.portalBpresente.linha,atlas.mapa.portalBpresente.coluna);
-    printf("posicao portal b passado: (%d,%d)\n", atlas.mapa.portalBpassado.linha,atlas.mapa.portalBpassado.coluna);
 
 
     // Primeira coluna, nao pode ser AAA
@@ -228,71 +224,57 @@ Posicao* encontraMelhorCaminho(Atlas atlas, int *tamanho) {
     int passos = 0;
     //aqui salva outras posicoes sem ser a inicial
     // da direita pra esquerda
-    
-    for (int j = colFinal; j >= 0; j--) {
+    int colunaAtual = colFinal;
+    while(colunaAtual >= 0) {
         trajeto[passos].linha = linhaAtual;
-        trajeto[passos].coluna = j;
+        trajeto[passos].coluna = colunaAtual;
         trajeto[passos].tempo = tempoAtual;
         
         
         passos++;
 
-        int cel = mapa.celula[tempoAtual][linhaAtual][j];
+        int cel = mapa.celula[tempoAtual][linhaAtual][colunaAtual];
 
         // verificacao ancora
         if (cel == teletransporteA){
             if(tempoAtual == presente){
 
-                int valorAtual = mapaPD.celula[tempoAtual][linhaAtual][j];
-                int valorOutro = mapaPD.celula[passado][mapaPD.portalApassado.linha][mapaPD.portalApassado.coluna];
-                int celOutro = mapa.celula[passado][mapaPD.portalApassado.linha][mapaPD.portalApassado.coluna];
-
-                if (celulaValida(celOutro) && celulaValida(valorOutro) && valorOutro >= valorAtual) {
+                if (testaDirecoes(mapaPD,tempoAtual,linhaAtual,colunaAtual) <= testaDirecoes(mapaPD,passado,mapaPD.portalApassado.linha,mapaPD.portalApassado.coluna)) {
                 tempoAtual = passado;
                 linhaAtual = mapaPD.portalApassado.linha;
+                colunaAtual = mapaPD.portalApassado.coluna;
                 }
 
             }else{
 
-                int valorAtual = mapaPD.celula[tempoAtual][linhaAtual][j];
-                int valorOutro = mapaPD.celula[presente][mapaPD.portalApresente.linha][mapaPD.portalApresente.coluna];
-                int celOutro = mapa.celula[presente][mapaPD.portalApresente.linha][mapaPD.portalApresente.coluna];
-
-                if (celulaValida(celOutro) && celulaValida(valorOutro) && valorOutro >= valorAtual) {
+                if (testaDirecoes(mapaPD,tempoAtual,linhaAtual,colunaAtual) <= testaDirecoes(mapaPD,presente,mapaPD.portalApresente.linha,mapaPD.portalApresente.coluna)) {
                 tempoAtual = presente;
                 linhaAtual = mapaPD.portalApresente.linha;
+                colunaAtual = mapaPD.portalApresente.coluna;
                 }
             }
         }
         else if (cel == teletransporteB){
             if(tempoAtual == presente){
-
-                int valorAtual = mapaPD.celula[tempoAtual][linhaAtual][j];
-                int valorOutro = mapaPD.celula[passado][mapaPD.portalBpassado.linha][mapaPD.portalBpassado.coluna];
-                int celOutro = mapa.celula[passado][mapaPD.portalBpassado.linha][mapaPD.portalBpassado.coluna];
-
-                if (celulaValida(celOutro) && celulaValida(valorOutro) && valorOutro >= valorAtual) {
+                if (testaDirecoes(mapaPD,tempoAtual,linhaAtual,colunaAtual) <= testaDirecoes(mapaPD,passado,mapaPD.portalBpassado.linha,mapaPD.portalBpassado.coluna)) {
                 tempoAtual = passado;
                 linhaAtual = mapaPD.portalBpassado.linha;
+                colunaAtual = mapaPD.portalBpassado.coluna;
                 }
 
             }else{
-
-                int valorAtual = mapaPD.celula[tempoAtual][linhaAtual][j];
-                int valorOutro = mapaPD.celula[presente][mapaPD.portalBpresente.linha][mapaPD.portalBpresente.coluna];
-                int celOutro = mapa.celula[presente][mapaPD.portalBpresente.linha][mapaPD.portalBpresente.coluna];
-
-                if (celulaValida(celOutro) && celulaValida(valorOutro) && valorOutro >= valorAtual) {
+                if (testaDirecoes(mapaPD,tempoAtual,linhaAtual,colunaAtual) <= testaDirecoes(mapaPD,presente,mapaPD.portalBpresente.linha,mapaPD.portalBpresente.coluna)) {
                 tempoAtual = presente;
                 linhaAtual = mapaPD.portalBpresente.linha;
+                colunaAtual = mapaPD.portalBpresente.coluna;
                 }
             }
         }
 
-        if (j == 0) 
+        if (colunaAtual == 0) 
             break;
 
-        int proximaCol = j - 1; //sem a 1 col
+        int proximaCol = colunaAtual - 1; //sem a 1 col
         if (proximaCol < 0){
             break;
         }
@@ -315,6 +297,7 @@ Posicao* encontraMelhorCaminho(Atlas atlas, int *tamanho) {
         }
 
         linhaAtual = melhorI;
+        colunaAtual--;
     }
 
     // Inverte o caminho
