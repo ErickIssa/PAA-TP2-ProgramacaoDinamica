@@ -8,8 +8,19 @@ OBJ_DIR = obj
 
 # Arquivos
 TARGET = main.exe
-SRCS = $(SRC_DIR)/main.c $(SRC_DIR)/TAD_mapa.c $(SRC_DIR)/menu.c $(SRC_DIR)/TAD_trajeto.c
-OBJS = $(OBJ_DIR)/main.o $(OBJ_DIR)/TAD_mapa.o $(OBJ_DIR)/menu.o $(OBJ_DIR)/TAD_trajeto.o
+SRCS = $(SRC_DIR)/main.c \
+       $(SRC_DIR)/TAD_mapa.c \
+       $(SRC_DIR)/menu.c \
+       $(SRC_DIR)/TAD_trajeto.c \
+       $(SRC_DIR)/TAD_tempo.c \
+       $(SRC_DIR)/GeradorDeMapas.c
+
+OBJS = $(OBJ_DIR)/main.o \
+       $(OBJ_DIR)/TAD_mapa.o \
+       $(OBJ_DIR)/menu.o \
+       $(OBJ_DIR)/TAD_trajeto.o \
+       $(OBJ_DIR)/TAD_tempo.o \
+       $(OBJ_DIR)/GeradorDeMapas.o
 
 # Regra padrão
 all: $(TARGET)
