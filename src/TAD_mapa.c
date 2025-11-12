@@ -132,3 +132,30 @@ void imprimeMapaPD(Atlas atlas) {
         printf("\n");
     }
 }
+
+void liberarAtlas(Atlas *atlas) {
+    if (!atlas) return;
+    int tempos = 2;
+
+    if (atlas->mapa.celula) {
+        for (int t = 0; t < tempos; t++) {
+            for (int i = 0; i < atlas->mapa.altura; i++) {
+                free(atlas->mapa.celula[t][i]);
+            }
+            free(atlas->mapa.celula[t]);
+        }
+        free(atlas->mapa.celula);
+        atlas->mapa.celula = NULL;
+    }
+
+    if (atlas->mapaPD.celula) {
+        for (int t = 0; t < tempos; t++) {
+            for (int i = 0; i < atlas->mapaPD.altura; i++) {
+                free(atlas->mapaPD.celula[t][i]);
+            }
+            free(atlas->mapaPD.celula[t]);
+        }
+        free(atlas->mapaPD.celula);
+        atlas->mapaPD.celula = NULL;
+    }
+}
