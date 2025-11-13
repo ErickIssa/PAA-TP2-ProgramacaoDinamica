@@ -6,42 +6,51 @@ CFLAGS = -Wall -Wextra -Iinclude
 SRC_DIR = src
 OBJ_DIR = obj
 
-# Arquivos
-TARGET = main.exe
+# Nome do executável
+TARGET = main
+
+# Detecta o sistema operacional
+ifeq ($(OS),Windows_NT)
+	EXE = $(TARGET).exe
+	MKDIR = if not exist "$(OBJ_DIR)" mkdir "$(OBJ_DIR)"
+	RM = if exist "$(OBJ_DIR)\*.o" del /q "$(OBJ_DIR)\*.o" & if exist "$(EXE)" del /q "$(EXE)"
+	RUN = $(EXE)
+else
+	EXE = $(TARGET)
+	MKDIR = mkdir -p $(OBJ_DIR)
+	RM = rm -f $(OBJ_DIR)/*.o $(EXE)
+	RUN = ./$(EXE)
+endif
+
+# Fontes e objetos
 SRCS = $(SRC_DIR)/main.c \
-       $(SRC_DIR)/TAD_mapa.c \
        $(SRC_DIR)/menu.c \
-       $(SRC_DIR)/TAD_trajeto.c \
+       $(SRC_DIR)/TAD_mapa.c \
        $(SRC_DIR)/TAD_tempo.c \
+       $(SRC_DIR)/TAD_trajeto.c \
        $(SRC_DIR)/GeradorDeMapas.c
 
-OBJS = $(OBJ_DIR)/main.o \
-       $(OBJ_DIR)/TAD_mapa.o \
-       $(OBJ_DIR)/menu.o \
-       $(OBJ_DIR)/TAD_trajeto.o \
-       $(OBJ_DIR)/TAD_tempo.o \
-       $(OBJ_DIR)/GeradorDeMapas.o
+OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 # Regra padrão
-all: $(TARGET)
+all: $(EXE)
 
-# Compila o executável
-$(TARGET): $(OBJS)
-	if not exist "$(OBJ_DIR)" mkdir "$(OBJ_DIR)"
-	$(CC) $(OBJS) -o $(TARGET)
-	@echo ✅ Programa compilado com sucesso: $(TARGET)
+# Linkagem final
+$(EXE): $(OBJS)
+	$(MKDIR)
+	$(CC) $(OBJS) -o $(EXE)
+	@echo ✅ Compilação concluída: $(EXE)
 
-# Compila cada .c em .o
+# Compilação dos .c em .o
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	if not exist "$(OBJ_DIR)" mkdir "$(OBJ_DIR)"
+	$(MKDIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Limpeza (compatível com Windows)
+# Limpeza
 clean:
-	if exist "$(OBJ_DIR)\*.o" del /q "$(OBJ_DIR)\*.o"
-	if exist "$(TARGET)" del /q "$(TARGET)"
+	$(RM)
 	@echo 🧹 Limpeza concluída.
 
-# Executar
-run:
-	$(TARGET)
+# Executar o programa
+run: all
+	$(RUN)
