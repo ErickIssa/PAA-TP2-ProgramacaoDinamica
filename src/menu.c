@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "../include/TAD_menu.h"
+#include "../include/TAD_geradorMapa.h"
 
 void menu(){
     printf("QUE COMECE A BATALHA CONTRA NIKADOR!\n");
@@ -20,6 +21,7 @@ void menu(){
         printf("3- Montar PD\n");
         printf("4- Imprime Mapa PD\n");
         printf("5- Testar desempenho (gera CSV)\n");
+        printf("6- Gerar novo mapa\n");
         printf("0- Sair\n");
 
         printf("Escolha uma opcao acima:\n");
@@ -53,6 +55,9 @@ void menu(){
             break;
         case 5:
             testarDesempenho();
+            break;
+         case 6:
+            geradorDeMapas();
             break;
         case 0:
             printf("Fechando programa...\n");
@@ -215,7 +220,7 @@ void testarDesempenho() {
         int portal2_y = rand() % altura + 1;
         fprintf(fp,"%d %d %d %d %d\n", altura, largura,
                 rand() % 90 + 10, rand() % 20 + 1, rand() % 60 + 1);
-        preencheMapa(fp, altura, largura, portal1_x, portal1_y, portal2_x, portal2_y);
+        preencheMapaBasico(fp, altura, largura, portal1_x, portal1_y, portal2_x, portal2_y);
         fclose(fp);
 
         Atlas atlas = {0};
